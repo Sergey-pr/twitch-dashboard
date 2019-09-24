@@ -13,7 +13,7 @@
         <b-embed
         type="iframe"
         aspect=""
-        :src="`https://www.twitch.tv/embed/${streamName}/chat`"
+        :src="`https://www.twitch.tv/embed/${streamName}/chat?darkpopout`"
         ></b-embed>
       </b-col>
     </b-row>
@@ -21,8 +21,6 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex'
-
 export default {
   name: 'streams',
   data() {
@@ -32,10 +30,9 @@ export default {
   },
   computed: {},
   methods: {},
-  mounted(){}
+  mounted() {}
 }
 </script>
-
 
 <style scoped>
   .embed-responsive {

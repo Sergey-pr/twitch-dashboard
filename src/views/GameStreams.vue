@@ -1,17 +1,24 @@
 <template>
   <div class="home-view-container">
-    <h1>{{ gameName(GAMES) }}</h1>
-    Total Viewers: {{ totalViewers(GAME_STREAMS) }}
+    <h1>{{ gameNameVal }}</h1>
+    Total Viewers: {{ totalViewersCount }}
+    <b-dropdown id="dropdown-1" :text="`Language: ${lang}`" class="m-md-2">
+      <b-dropdown-item v-if="lang !== 'all'">All</b-dropdown-item>
+      <b-dropdown-item v-if="lang !== 'ru'">Russian</b-dropdown-item>
+      <b-dropdown-item v-if="lang !== 'en'">English</b-dropdown-item>
+    </b-dropdown>
     <b-row>
-      <b-col 
+      <b-col
       v-for="stream in GAME_STREAMS"
-      :key="stream.id" 
-      xl="2" 
-      lg="3" 
-      md="4" 
-      sm="8" 
+      :key="stream.id"
+      xl="2"
+      lg="3"
+      md="4"
+      sm="8"
       mt="5">
         <b-card
+        bg-variant="dark"
+        text-variant="white"
         :title="stream.user_name"
         :img-src="stream.thumbnail_url"
         img-alt="Image"
@@ -28,12 +35,16 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'gameStreams',
   data() {
-    return {}
+    return {
+      lang: 'all',
+      totalViewersCount: 0,
+      gameNameVal: null
+    }
   },
   computed: {
     ...mapGetters([
@@ -43,19 +54,26 @@ export default {
   },
   mounted() {
     const gameId = this.$route.params.id
-    this.$store.dispatch('GET_GAME_STREAMS', gameId)
+    let payload = 'game_id=' + gameId
+    this.$store.dispatch('GET_GAME_STREAMS', payload)
+      .then(() => {
+        this.totalViewers()
+      })
     this.$store.dispatch('GET_GAMES')
+      .then(() => {
+        this.gameName()
+      })
   },
   methods: {
-    totalViewers(gs) { 
-      return gs.reduce((acc, val) => {
-        return acc + val.viewer_count;
+    totalViewers() {
+      this.totalViewersCount = this.GAME_STREAMS.reduce((acc, val) => {
+        return acc + val.viewer_count
       }, 0)
     },
-    gameName(games) {
-      for (let i = 0; i < games.length; i++) {
-        if (games[i]['id'] === this.$route.params.id) {
-          return games[i]['name']
+    gameName() {
+      for (let i = 0; i < this.GAMES.length; i++) {
+        if (this.GAMES[i]['id'] === this.$route.params.id) {
+          this.gameNameVal = this.GAMES[i]['name']
         }
       }
     }

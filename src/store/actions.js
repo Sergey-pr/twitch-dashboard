@@ -7,7 +7,7 @@ export default {
   },
   GET_GAME_STREAMS: async (context, payload) => {
     const result = await Api.get(
-      `https://api.twitch.tv/helix/streams?first=100&game_id=${
+      `https://api.twitch.tv/helix/streams?first=100&${
         payload
       }`)
     context.commit('SET_STREAM_PREVIEW', result.data.data)
