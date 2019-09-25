@@ -2,11 +2,18 @@
   <div class="home-view-container">
     <h1>{{ gameNameVal }}</h1>
     Total Viewers: {{ totalViewersCount }}
-    <b-dropdown id="dropdown-1" :text="`Language: ${lang}`" class="m-md-2">
-      <b-dropdown-item v-if="lang !== 'all'">All</b-dropdown-item>
-      <b-dropdown-item v-if="lang !== 'ru'">Russian</b-dropdown-item>
-      <b-dropdown-item v-if="lang !== 'en'">English</b-dropdown-item>
+    <b-dropdown id="dropdown-1" :text="`Language: ${realLang}`" class="m-md-2">
+      <b-dropdown-item @click="changeLang('all')" v-if="lang !== 'all'">
+        All
+      </b-dropdown-item>
+      <b-dropdown-item @click="changeLang('ru')" v-if="lang !== 'ru'">
+        Russian
+      </b-dropdown-item>
+      <b-dropdown-item @click="changeLang('en')" v-if="lang !== 'en'">
+        English
+      </b-dropdown-item>
     </b-dropdown>
+    <Search/>
     <b-row>
       <b-col
       v-for="stream in GAME_STREAMS"
@@ -27,7 +34,11 @@
           <h5>{{ stream.title }}</h5>
           <h6>Currently watching: {{ stream.viewer_count }}</h6>
         </b-card-text>
-        <b-button @click="$router.push({ path: `/streams/${stream.user_name}` })" variant="primary">{{ stream.user_name }} Stream</b-button>
+        <b-button
+        @click="getUserName(stream.user_id)"
+        variant="primary">
+          {{ stream.user_name }} Stream
+        </b-button>
         </b-card>
       </b-col>
     </b-row>
@@ -36,9 +47,13 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import Search from '@/components/Search.vue'
 
 export default {
   name: 'gameStreams',
+  components: {
+    Search
+  },
   data() {
     return {
       lang: 'all',
@@ -49,12 +64,21 @@ export default {
   computed: {
     ...mapGetters([
       'GAME_STREAMS',
-      'GAMES'
-    ])
+      'GAMES',
+      'USER'
+    ]),
+    realLang() {
+      let langDict = {
+        'all': 'All',
+        'ru': 'Russian',
+        'en': 'English'
+      }
+      return langDict[this.lang]
+    }
   },
-  mounted() {
+  created() {
     const gameId = this.$route.params.id
-    let payload = 'game_id=' + gameId
+    let payload = ['game_id=' + gameId]
     this.$store.dispatch('GET_GAME_STREAMS', payload)
       .then(() => {
         this.totalViewers()
@@ -76,6 +100,24 @@ export default {
           this.gameNameVal = this.GAMES[i]['name']
         }
       }
+    },
+    getUserName(userID) {
+      this.$store.dispatch('GET_USER', userID)
+        .then(() => {
+          this.$router.push({
+            path: `/streams/${this.USER.login}`
+          })
+        })
+    },
+    changeLang(langVar) {
+      this.lang = langVar
+      let payload = []
+      if (this.lang === 'all') {
+        payload = ['game_id=' + this.$route.params.id]
+      } else {
+        payload = ['game_id=' + this.$route.params.id, '&language=' + this.lang]
+      }
+      this.$store.dispatch('GET_GAME_STREAMS', payload)
     }
   }
 }

@@ -18,5 +18,11 @@ export default {
       return stream
     })
     state.gameStreams = finalArray
+  },
+  SET_USER: (state, payload) => {
+    state.user = payload[0]
+  },
+  SET_SEARCH: (state, payload) => {
+    state.search = payload[0]
   }
 }

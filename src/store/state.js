@@ -1,4 +1,6 @@
 export default {
   games: null,
-  gameStreams: null
+  gameStreams: null,
+  user: null,
+  search: null
 }
