@@ -19,7 +19,7 @@
     <Search/>
     <b-row>
       <b-col
-      v-for="stream in GAME_STREAMS"
+      v-for="stream in GAME_TOP_STREAMS"
       :key="stream.id"
       xl="2"
       lg="3"
@@ -68,7 +68,7 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'GAME_STREAMS',
+      'GAME_TOP_STREAMS',
       'GAMES',
       'USER'
     ]),

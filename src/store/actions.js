@@ -16,7 +16,7 @@ export default {
     const result = await Api.get(
       `https://api.twitch.tv/helix/streams?first=100${payload}`
     )
-    context.commit('SET_STREAM_PREVIEW', result.data.data)
+    context.commit('SET_TOP_STREAM_PREVIEW', result.data.data)
   },
   GET_USER: async (context, payload) => {
     const result = await Api.get(`https://api.twitch.tv/helix/users?id=${payload}`)
@@ -26,12 +26,12 @@ export default {
     const result = await Api.get(`https://api.twitch.tv/helix/users?login=${payload}`)
     context.commit('SET_USER', result.data.data)
   },
-  SEARCH_GAME: async (context, payload) => {
+  GET_SEARCH_GAME: async (context, payload) => {
     const result = await Api.get(`https://api.twitch.tv/helix/games?name=${payload}`)
-    context.commit('SET_SEARCH', result.data.data)
+    context.commit('SET_SEARCH_GAME', result.data.data)
   },
-  SEARCH_CHANNEL: async (context, payload) => {
+  GET_SEARCH_CHANNEL: async (context, payload) => {
     const result = await Api.get(`https://api.twitch.tv/helix/users?login=${payload}`)
-    context.commit('SET_SEARCH', result.data.data)
+    context.commit('SET_SEARCH_CHANNEL', result.data.data)
   }
 }
