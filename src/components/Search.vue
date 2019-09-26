@@ -120,7 +120,8 @@ export default {
       SEARCH_CHANNEL: 'SEARCH_CHANNEL',
       SEARCH_GAME: 'SEARCH_GAME',
       SEARCH_GAMES: 'GAMES',
-      SEARCH_STREAMS: 'GAME_STREAMS'
+      SEARCH_STREAMS: 'GAME_STREAMS',
+      SEARCH_TOP_STREAMS: 'GAME_TOP_STREAMS',
     })
   },
   watch: {
@@ -153,6 +154,11 @@ export default {
             this.channels.push(x)
           }
         })
+        this.SEARCH_TOP_STREAMS.map((x) => {
+          if (x.user_name.toLowerCase().includes(this.searchField.toLowerCase())) {
+            this.channels.push(x)
+          }
+        })
       }
     }
   }
@@ -162,16 +168,16 @@ export default {
 
 <style scoped lang="scss">
 #search-card {
-  height: 60px
+  height: 70px
 }
 .card-img-left {
-  height: 60px
+  height: 70px
 }
 .search-desc {
   font-size: 14px;
 }
 .card-text {
-  height: 110px;
+  height: auto;
   overflow: auto;
   color: #ffffff;
   &:link {
