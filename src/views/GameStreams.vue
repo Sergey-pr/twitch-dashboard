@@ -119,6 +119,20 @@ export default {
       }
       this.$store.dispatch('GET_GAME_STREAMS', payload)
     }
+  },
+  watch: {
+    $route() {
+      const gameId = this.$route.params.id
+      let payload = ['game_id=' + gameId]
+      this.$store.dispatch('GET_GAME_STREAMS', payload)
+        .then(() => {
+          this.totalViewers()
+        })
+      this.$store.dispatch('GET_GAMES')
+        .then(() => {
+          this.gameName()
+        })
+    }
   }
 }
 </script>

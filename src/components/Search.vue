@@ -24,7 +24,7 @@
           >
             <router-link :to="`/streams/${this.SEARCH_CHANNEL.login}`">
               <b-card-text>
-                <p>Channel: {{ SEARCH_CHANNEL.display_name }}</p>
+                <p class="search-desc">Channel: {{ SEARCH_CHANNEL.display_name }}</p>
               </b-card-text>
             </router-link>
           </b-card>
@@ -46,7 +46,7 @@
           >
             <router-link :to="`/games/${SEARCH_GAME.id}`">
               <b-card-text>
-                <p>Game: {{ SEARCH_GAME.name }}</p>
+                <p class="search-desc">Game: {{ SEARCH_GAME.name }}</p>
               </b-card-text>
             </router-link>
           </b-card>
@@ -70,7 +70,7 @@
           >
             <router-link :to="`/games/${game.id}`">
               <b-card-text>
-                <p>Game: {{ game.name }}</p>
+                <p class="search-desc">Game: {{ game.name }}</p>
               </b-card-text>
             </router-link>
           </b-card>
@@ -94,7 +94,7 @@
           >
             <router-link :to="`/streams/${channel.user_name}`">
               <b-card-text>
-                <p>Channel: {{ channel.user_name }}</p>
+                <p class="search-desc">Channel: {{ channel.user_name }}</p>
               </b-card-text>
             </router-link>
           </b-card>
@@ -126,6 +126,9 @@ export default {
   watch: {
     searchField: function (newSearchField, oldSearchField) {
       this.debouncedGetAnswer()
+    },
+    $route() {
+      this.searchField = null
     }
   },
   created() {
@@ -159,12 +162,12 @@ export default {
 
 <style scoped lang="scss">
 #search-card {
-  height: 75px
+  height: 60px
 }
 .card-img-left {
-  height: 75px
+  height: 60px
 }
-#search-desc {
+.search-desc {
   font-size: 14px;
 }
 .card-text {
