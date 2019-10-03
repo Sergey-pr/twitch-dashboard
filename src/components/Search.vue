@@ -146,21 +146,27 @@ export default {
       this.games = []
       this.channels = []
       if (this.searchField.length > 2) {
-        this.SEARCH_GAMES.map((x) => {
-          if (x.name.toLowerCase().includes(this.searchField.toLowerCase())) {
-            this.games.push(x)
-          }
-        })
-        this.SEARCH_STREAMS.map((x) => {
-          if (x.user_name.toLowerCase().includes(this.searchField.toLowerCase())) {
-            this.channels.push(x)
-          }
-        })
-        this.SEARCH_TOP_STREAMS.map((x) => {
-          if (x.user_name.toLowerCase().includes(this.searchField.toLowerCase())) {
-            this.channels.push(x)
-          }
-        })
+        if (this.SEARCH_GAMES) {
+          this.SEARCH_GAMES.map((x) => {
+            if (x.name.toLowerCase().includes(this.searchField.toLowerCase())) {
+              this.games.push(x)
+            }
+          })
+        }
+        if (this.SEARCH_STREAMS) {
+          this.SEARCH_STREAMS.map((x) => {
+            if (x.user_name.toLowerCase().includes(this.searchField.toLowerCase())) {
+              this.channels.push(x)
+            }
+          })
+        }
+        if (this.SEARCH_TOP_STREAMS) {
+          this.SEARCH_TOP_STREAMS.map((x) => {
+            if (x.user_name.toLowerCase().includes(this.searchField.toLowerCase())) {
+              this.channels.push(x)
+            }
+          })
+        }
       }
     }
   }
