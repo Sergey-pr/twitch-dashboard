@@ -53,7 +53,7 @@
         </b-collapse>
         <b-collapse
         v-if="games.length > 0 && searchField"
-        v-model="games"
+        v-model="games[0]"
         id="collapse-1"
         class="mt-2"
         >
@@ -77,7 +77,7 @@
         </b-collapse>
         <b-collapse
         v-if="channels.length > 0 && searchField"
-        v-model="channels"
+        v-model="channels[0]"
         id="collapse-1"
         class="mt-2"
         >
@@ -121,21 +121,23 @@ export default {
       SEARCH_GAME: 'SEARCH_GAME',
       SEARCH_GAMES: 'GAMES',
       SEARCH_STREAMS: 'GAME_STREAMS',
-      SEARCH_TOP_STREAMS: 'GAME_TOP_STREAMS',
+      SEARCH_TOP_STREAMS: 'GAME_TOP_STREAMS'
     })
   },
   watch: {
     searchField: function (newSearchField, oldSearchField) {
-      this.debouncedGetAnswer()
+      if (this.searchField) {
+        this.debouncedGetAnswer()
+      }
     },
     $route() {
       this.searchField = null
     }
   },
   created() {
-      this.debouncedGetAnswer = _.debounce(this.getAnswer, 500)
-      this.$store.dispatch('GET_GAMES')
-      this.$store.dispatch('GET_TOP_STREAMS',[])
+    this.debouncedGetAnswer = _.debounce(this.getAnswer, 500)
+    this.$store.dispatch('GET_GAMES')
+    this.$store.dispatch('GET_TOP_STREAMS', [])
   },
   methods: {
     getAnswer() {
@@ -148,7 +150,7 @@ export default {
           if (x.name.toLowerCase().includes(this.searchField.toLowerCase())) {
             this.games.push(x)
           }
-        }),
+        })
         this.SEARCH_STREAMS.map((x) => {
           if (x.user_name.toLowerCase().includes(this.searchField.toLowerCase())) {
             this.channels.push(x)
