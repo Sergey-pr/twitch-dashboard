@@ -21,8 +21,8 @@
       xl="2"
       lg="3"
       md="4"
-      sm="8"
-      mt="5">
+      cols="6"
+      >
         <b-card
         bg-variant="dark"
         text-variant="white"

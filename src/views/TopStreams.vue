@@ -24,8 +24,7 @@
       xl="2"
       lg="3"
       md="4"
-      sm="8"
-      mt="5"
+      cols="6"
       >
         <b-card
         bg-variant="dark"
@@ -35,7 +34,11 @@
         img-alt="Image"
         >
         <b-card-text>
-          <p v-if="stream.game_id" class="gameName">
+          <p
+          v-if="stream.game_id"
+          class="gameName"
+          @click="goToGame(stream.game_id)"
+          >
             {{ gameName(stream.game_id) }}
           </p>
           <h5>{{ stream.title }}</h5>
@@ -103,6 +106,11 @@ export default {
           })
         })
     },
+    goToGame(game_id) {
+      this.$router.push({
+        path: `/games/${game_id}`
+      })
+    },
     changeLang(langVar) {
       this.lang = langVar
       if (this.lang !== 'all') {
@@ -119,6 +127,10 @@ export default {
   .gameName {
     border: 1px solid #6441a5;
     border-radius: 25px;
-    padding: 2px
+    padding: 2px;
+    cursor: pointer
+  }
+  .gameName:hover {
+    border: 1px solid rgb(137, 96, 212);
   }
 </style>

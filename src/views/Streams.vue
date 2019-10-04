@@ -1,7 +1,7 @@
 <template>
   <div class="home-view-container">
     <Search/>
-    <b-container fluid>
+    <b-container id="name-box" fluid>
       <b-row>
         <b-img
         rounded="circle"
@@ -12,25 +12,33 @@
         <h1><b>{{ USER.display_name }}</b></h1>
       </b-row>
     </b-container>
-    <hr/>
-    <b-row class="justify-content-md-center">
-      <b-col cols="9">
-        <b-embed
-        type="iframe"
-        aspect="16by9"
-        :src="`https://player.twitch.tv/?channel=${streamName}`"
-        allowfullscreen
-        ></b-embed>
-      </b-col>
-      <b-col cols="3">
-        <b-embed
-        type="iframe"
-        aspect=""
-        :src="`https://www.twitch.tv/embed/${streamName}/chat?darkpopout`"
-        ></b-embed>
-      </b-col>
-    </b-row>
-    <hr/>
+    <hr>
+    <b-container fluid>
+      <b-row align-v="center">
+        <b-col
+        xl="9"
+        lg="8"
+        md="12">
+          <b-embed
+          type="iframe"
+          aspect="16by9"
+          :src="`https://player.twitch.tv/?channel=${streamName}`"
+          allowfullscreen
+          ></b-embed>
+        </b-col>
+        <b-col
+        xl="3"
+        lg="4"
+        md="12">
+          <b-embed
+          type="iframe"
+          aspect="9by16"
+          :src="`https://www.twitch.tv/embed/${streamName}/chat?darkpopout`"
+          ></b-embed>
+        </b-col>
+      </b-row>
+    </b-container>
+    <hr>
     {{ USER.description }}
   </div>
 </template>
@@ -62,13 +70,16 @@ export default {
 </script>
 
 <style scoped>
-  .embed-responsive {
-    height: 100%
+  .embed-responsive-9by16 {
+    padding-bottom: 182%
   }
   .img-fluid {
     height: 45px
   }
   hr {
-    border-top: 1px solid #6441a5;
+    border-top: 1px solid #6441a5
+  }
+  #name-box {
+    margin-top: 20px
   }
 </style>

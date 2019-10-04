@@ -198,7 +198,7 @@ export default {
     color: #666666
   }
 }
-a{
+a {
   color: #aaaaaa
 }
 h3 {
