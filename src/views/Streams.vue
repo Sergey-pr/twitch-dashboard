@@ -65,6 +65,12 @@ export default {
   methods: {},
   mounted() {
     this.$store.dispatch('GET_USER_BY_LOGIN', this.streamName)
+  },
+  watch: {
+    $route() {
+      this.streamName = this.$route.params.streamname
+      this.$store.dispatch('GET_USER_BY_LOGIN', this.streamName)
+    }
   }
 }
 </script>
